@@ -2,8 +2,8 @@
 
 A modern, responsive weather forecast application built with FastAPI, **Python, and **vanilla HTML/CSS. Get real-time weather data, compare cities, manage favorites, and enjoy a beautiful user interface without any JavaScript dependencies.
 
-[Weather App Screenshot 1](images/image1.png)  
-[Weather App Screenshot 2](images/image2%20.png)
+![Weather App Screenshot 1](images/image1.png)  
+![Weather App Screenshot 2](images/image2%20.png)
 
 
 ## 📋 Table of Contents

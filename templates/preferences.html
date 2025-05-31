@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preferences - Weather Forecast</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body class="light-mode">
+    <div class="container fade-in">
+        <header>
+            <h1><i class="fas fa-cog"></i> Preferences</h1>
+            <p>Customize your weather experience</p>
+        </header>
+        
+        <main>
+            <!-- Success or Error Messages -->
+            {% if saved == 'true' %}
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> Your preferences have been saved successfully!
+            </div>
+            {% endif %}
+            
+            {% if error %}
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i> Error: {{ error }}
+            </div>
+            {% endif %}
+            
+            <section class="preferences-section">
+                <form action="/save-preferences" method="post">
+                    <div class="preferences-card">
+                        <h2><i class="fas fa-sliders-h"></i> General Settings</h2>
+                        
+                        <div class="form-group">
+                            <label for="default_location">Default Location:</label>
+                            <input type="text" id="default_location" name="default_location" value="{{ preferences.default_location }}" placeholder="Enter a city name">
+                            <small>This location will be pre-filled when you open the app</small>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="units">Temperature Units:</label>
+                            <select id="units" name="units">
+                                <option value="metric" {% if preferences.units == 'metric' %}selected{% endif %}>Celsius (°C)</option>
+                                <option value="imperial" {% if preferences.units == 'imperial' %}selected{% endif %}>Fahrenheit (°F)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="refresh_interval">Cache Refresh Interval:</label>
+                            <select id="refresh_interval" name="refresh_interval">
+                                <option value="15" {% if preferences.refresh_interval == 15 %}selected{% endif %}>15 minutes</option>
+                                <option value="30" {% if preferences.refresh_interval == 30 %}selected{% endif %}>30 minutes</option>
+                                <option value="60" {% if preferences.refresh_interval == 60 %}selected{% endif %}>1 hour</option>
+                                <option value="180" {% if preferences.refresh_interval == 180 %}selected{% endif %}>3 hours</option>
+                            </select>
+                            <small>How often weather data should be refreshed from the API</small>
+                        </div>
+                        
+                        <div class="form-group checkbox">
+                            <input type="checkbox" id="show_alerts" name="show_alerts" {% if preferences.show_alerts %}checked{% endif %} value="true">
+                            <label for="show_alerts">Show Weather Alerts</label>
+                        </div>
+                    </div>
+                    
+                    <div class="preferences-card">
+                        <h2><i class="fas fa-star"></i> Favorite Locations</h2>
+                        
+                        <div class="favorite-locations">
+                            {% if preferences.favorite_locations %}
+                                {% for location in preferences.favorite_locations %}
+                                <div class="favorite-location-item">
+                                    <a href="/weather?location={{ location }}" class="favorite-location-name">
+                                        <i class="fas fa-map-marker-alt"></i> {{ location }}
+                                    </a>
+                                    <form action="/remove-favorite" method="post" class="remove-favorite-form">
+                                        <input type="hidden" name="location" value="{{ location }}">
+                                        <button type="submit" class="remove-favorite-btn">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                                {% endfor %}
+                            {% else %}
+                                <p class="no-favorites">You haven't added any favorite locations yet.</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn primary"><i class="fas fa-save"></i> Save Preferences</button>
+                        <a href="/" class="btn secondary"><i class="fas fa-arrow-left"></i> Back to Home</a>
+                    </div>
+                </form>
+            </section>
+        </main>
+        
+        <footer>
+            <p>Weather Forecast App &copy; 2025 | Powered by <a href="https://openweathermap.org/" target="_blank">OpenWeatherMap</a></p>
+        </footer>
+    </div>
+</body>
+</html>

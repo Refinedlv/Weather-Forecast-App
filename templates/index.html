@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Forecast</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body class="light-mode">
+    <div class="container fade-in">
+      <header>
+        <h1><i class="fas fa-cloud-sun"></i> Weather Forecast</h1>
+        <p>Get accurate weather information for any location</p>
+        <nav>
+          <ul>
+            <li>
+              <a href="/" class="active"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="/comparison"
+                ><i class="fas fa-balance-scale"></i> Compare Weather</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <section class="search-section">
+          <form action="/weather" method="post">
+            <div class="form-group">
+              <label for="location"
+                ><i class="fas fa-map-marker-alt"></i> Enter location:</label
+              >
+              <input
+                type="text"
+                id="location"
+                name="location"
+                value="{{ default_location }}"
+                placeholder="City name (e.g., London, New York, Tokyo)"
+                required
+              />
+            </div>
+
+            <div class="form-group checkbox">
+              <input
+                type="checkbox"
+                id="save_preference"
+                name="save_preference"
+                value="true"
+              />
+              <label for="save_preference"
+                ><i class="fas fa-bookmark"></i> Save as default location</label
+              >
+            </div>
+
+            <div class="form-group checkbox">
+              <input
+                type="checkbox"
+                id="add_to_favorites"
+                name="add_to_favorites"
+                value="true"
+              />
+              <label for="add_to_favorites"
+                ><i class="fas fa-star"></i> Add to favorites</label
+              >
+            </div>
+
+            <button type="submit" class="btn primary">
+              <i class="fas fa-search"></i> Get Weather
+            </button>
+          </form>
+        </section>
+
+        <!-- Favorite Locations Section (if any) -->
+        {% if favorite_locations %}
+        <section class="favorites-section">
+          <h2><i class="fas fa-star"></i> Your Favorite Locations</h2>
+          <div class="favorites-grid">
+            {% for location in favorite_locations %}
+            <a
+              href="/weather?location={{ location }}"
+              class="favorite-location-card"
+            >
+              <i class="fas fa-map-marker-alt location-icon"></i>
+              <span class="location-name">{{ location }}</span>
+              <i class="fas fa-chevron-right go-icon"></i>
+            </a>
+            {% endfor %}
+          </div>
+        </section>
+        {% endif %}
+
+        <section class="info-section">
+          <h2><i class="fas fa-info-circle"></i> About This App</h2>
+          <p>
+            Enter a city name to get the current weather conditions and a 5-day
+            forecast.
+          </p>
+          <p>
+            Your location data is cached for 30 minutes to minimize API calls
+            and provide faster results.
+          </p>
+          <p>
+            Use the <strong>Clear Cache</strong> button to refresh data from the
+            API when you need the most up-to-date information.
+          </p>
+          <p>
+            <a href="/clear-cache" class="btn secondary"
+              ><i class="fas fa-sync-alt"></i> Clear Cache</a
+            >
+          </p>
+          <p>
+            <a href="/preferences" class="btn secondary"
+              ><i class="fas fa-cog"></i> Preferences</a
+            >
+          </p>
+        </section>
+
+        <!-- Features Section -->
+        <section class="info-section">
+          <h2><i class="fas fa-star"></i> Features</h2>
+          <div class="weather-dashboard">
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-cloud-sun-rain"></i>
+              </div>
+              <div class="stat-value">Weather Conditions</div>
+              <div class="stat-label">Current & Forecast</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-quote-left"></i>
+              </div>
+              <div class="stat-value">Weather Quotes</div>
+              <div class="stat-label">Inspirational Messages</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-star"></i>
+              </div>
+              <div class="stat-value">Favorites</div>
+              <div class="stat-label">Save Locations</div>
+            </div>
+
+            <div class="stat-card">
+              <div class="stat-icon">
+                <i class="fas fa-bell"></i>
+              </div>
+              <div class="stat-value">Weather Alerts</div>
+              <div class="stat-label">Important Notifications</div>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>
+          Weather Forecast App &copy; 2025 | Powered by
+          <a href="https://openweathermap.org/" target="_blank"
+            >OpenWeatherMap</a
+          >
+        </p>
+        <p>Created by Refinedlv with Python (FastAPI) and HTML/CSS</p>
+      </footer>
+    </div>
+  </body>
+</html>

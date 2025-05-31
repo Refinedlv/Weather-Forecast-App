@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ theme }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Weather Comparison - Weather Forecast App</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1><i class="fas fa-cloud-sun"></i> Weather Forecast</h1>
+        <nav>
+          <ul>
+            <li>
+              <a href="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="/comparison"
+                ><i class="fas fa-balance-scale"></i> Compare Weather</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <section class="comparison-section">
+          <h2><i class="fas fa-balance-scale"></i> Weather Comparison</h2>
+
+          <div class="comparison-card">
+            <div class="comparison-header">
+              <h3>
+                <i class="fas fa-exchange-alt"></i> {{ location1 }} vs {{
+                location2 }}
+              </h3>
+            </div>
+
+            <div class="comparison-body">
+              <div class="comparison-location">
+                <div class="comparison-city">
+                  {{ location1 }}, {{ weather1.country }}
+                </div>
+                <div class="weather-icon">
+                  <img
+                    src="https://openweathermap.org/img/wn/{{ weather1.weather_icon }}@2x.png"
+                    alt="{{ weather1.weather_condition }}"
+                  />
+                </div>
+                <div class="comparison-temp">
+                  {{ weather1.temperature|round(1) }}{{ '°F' if units ==
+                  'imperial' else '°C' }}
+                </div>
+                <div class="comparison-condition">
+                  {{ weather1.weather_description }}
+                </div>
+
+                <div class="comparison-details">
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Feels Like</span>
+                    <span class="comparison-value"
+                      >{{ weather1.feels_like|round(1) }}{{ '°F' if units ==
+                      'imperial' else '°C' }}</span
+                    >
+                  </div>
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Humidity</span>
+                    <span class="comparison-value"
+                      >{{ weather1.humidity }}%</span
+                    >
+                  </div>
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Wind Speed</span>
+                    <span class="comparison-value"
+                      >{{ weather1.wind_speed }} {{ 'mph' if units == 'imperial'
+                      else 'm/s' }}</span
+                    >
+                  </div>
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Pressure</span>
+                    <span class="comparison-value"
+                      >{{ weather1.pressure }} hPa</span
+                    >
+                  </div>
+                </div>
+              </div>
+
+              <div class="comparison-location">
+                <div class="comparison-city">
+                  {{ location2 }}, {{ weather2.country }}
+                </div>
+                <div class="weather-icon">
+                  <img
+                    src="https://openweathermap.org/img/wn/{{ weather2.weather_icon }}@2x.png"
+                    alt="{{ weather2.weather_condition }}"
+                  />
+                </div>
+                <div class="comparison-temp">
+                  {{ weather2.temperature|round(1) }}{{ '°F' if units ==
+                  'imperial' else '°C' }}
+                </div>
+                <div class="comparison-condition">
+                  {{ weather2.weather_description }}
+                </div>
+
+                <div class="comparison-details">
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Feels Like</span>
+                    <span class="comparison-value"
+                      >{{ weather2.feels_like|round(1) }}{{ '°F' if units ==
+                      'imperial' else '°C' }}</span
+                    >
+                  </div>
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Humidity</span>
+                    <span class="comparison-value"
+                      >{{ weather2.humidity }}%</span
+                    >
+                  </div>
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Wind Speed</span>
+                    <span class="comparison-value"
+                      >{{ weather2.wind_speed }} {{ 'mph' if units == 'imperial'
+                      else 'm/s' }}</span
+                    >
+                  </div>
+                  <div class="comparison-detail">
+                    <span class="comparison-label">Pressure</span>
+                    <span class="comparison-value"
+                      >{{ weather2.pressure }} hPa</span
+                    >
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="actions">
+            <a href="/comparison" class="btn primary-btn">
+              <i class="fas fa-search"></i> New Comparison
+            </a>
+            <a href="/" class="btn secondary-btn">
+              <i class="fas fa-arrow-left"></i> Back to Home
+            </a>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>&copy; 2025 Weather Forecast App</p>
+        <div class="footer-links">
+          <a href="/clear-cache" class="footer-link"
+            ><i class="fas fa-broom"></i> Clear Cache</a
+          >
+          <a href="/" class="footer-link"><i class="fas fa-home"></i> Home</a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>

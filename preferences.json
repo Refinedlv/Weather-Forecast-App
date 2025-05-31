@@ -1,0 +1,8 @@
+{
+  "default_location": "",
+  "favorite_locations": [],
+  "units": "metric",
+  "refresh_interval": 30,
+  "show_alerts": true,
+  "map_default_layer": "temp"
+}

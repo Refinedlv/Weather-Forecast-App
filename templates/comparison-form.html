@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="{{ theme }}">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compare Weather - Weather Forecast App</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="container fade-in">
+      <header>
+        <h1><i class="fas fa-cloud-sun"></i> Weather Forecast</h1>
+        <nav>
+          <ul>
+            <li>
+              <a href="/"><i class="fas fa-home"></i> Home</a>
+            </li>
+            <li>
+              <a href="/comparison" class="active"
+                ><i class="fas fa-balance-scale"></i> Compare Weather</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </header>
+
+      <main>
+        <section class="comparison-form-section">
+          <h2><i class="fas fa-balance-scale"></i> Compare Weather Between Cities</h2>
+          
+          <div class="comparison-form-card">
+            <form action="/compare-weather" method="post">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="location1">
+                    <i class="fas fa-map-marker-alt"></i> First City:
+                  </label>
+                  <input 
+                    type="text" 
+                    id="location1" 
+                    name="location1" 
+                    placeholder="Enter first city (e.g., London)" 
+                    required
+                    value="{{ location1 or '' }}"
+                  >
+                </div>
+                
+                <div class="vs-divider">
+                  <span>VS</span>
+                </div>
+                
+                <div class="form-group">
+                  <label for="location2">
+                    <i class="fas fa-map-marker-alt"></i> Second City:
+                  </label>
+                  <input 
+                    type="text" 
+                    id="location2" 
+                    name="location2" 
+                    placeholder="Enter second city (e.g., New York)" 
+                    required
+                    value="{{ location2 or '' }}"
+                  >
+                </div>
+              </div>
+              
+              <div class="form-group">
+                <label for="units">Temperature Units:</label>
+                <select id="units" name="units">
+                  <option value="metric" {% if units == 'metric' %}selected{% endif %}>Celsius (°C)</option>
+                  <option value="imperial" {% if units == 'imperial' %}selected{% endif %}>Fahrenheit (°F)</option>
+                </select>
+              </div>
+              
+              <button type="submit" class="btn primary-btn">
+                <i class="fas fa-balance-scale"></i> Compare Weather
+              </button>
+            </form>
+          </div>
+          
+          <!-- Quick Comparison Suggestions -->
+          {% if favorite_locations and favorite_locations|length >= 2 %}
+          <div class="quick-comparisons">
+            <h3><i class="fas fa-star"></i> Quick Comparisons from Your Favorites</h3>
+            <div class="quick-comparison-grid">
+              {% for i in range(favorite_locations|length - 1) %}
+                {% for j in range(i + 1, favorite_locations|length) %}
+                <a href="/compare-weather?location1={{ favorite_locations[i] }}&location2={{ favorite_locations[j] }}" 
+                   class="quick-comparison-card">
+                  <span class="location">{{ favorite_locations[i] }}</span>
+                  <span class="vs">vs</span>
+                  <span class="location">{{ favorite_locations[j] }}</span>
+                </a>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          </div>
+          {% endif %}
+          
+          <!-- Popular Comparisons -->
+          <div class="popular-comparisons">
+            <h3><i class="fas fa-fire"></i> Popular Comparisons</h3>
+            <div class="popular-comparison-grid">
+              <a href="/compare-weather?location1=London&location2=New York" class="popular-comparison-card">
+                <span class="location">London</span>
+                <span class="vs">vs</span>
+                <span class="location">New York</span>
+              </a>
+              <a href="/compare-weather?location1=Tokyo&location2=Paris" class="popular-comparison-card">
+                <span class="location">Tokyo</span>
+                <span class="vs">vs</span>
+                <span class="location">Paris</span>
+              </a>
+              <a href="/compare-weather?location1=Sydney&location2=Los Angeles" class="popular-comparison-card">
+                <span class="location">Sydney</span>
+                <span class="vs">vs</span>
+                <span class="location">Los Angeles</span>
+              </a>
+              <a href="/compare-weather?location1=Dubai&location2=Singapore" class="popular-comparison-card">
+                <span class="location">Dubai</span>
+                <span class="vs">vs</span>
+                <span class="location">Singapore</span>
+              </a>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      <footer>
+        <p>&copy; 2025 Weather Forecast App</p>
+        <div class="footer-links">
+          <a href="/clear-cache" class="footer-link">
+            <i class="fas fa-broom"></i> Clear Cache
+          </a>
+          <a href="/" class="footer-link">
+            <i class="fas fa-home"></i> Home
+          </a>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
